@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Electron Minimum Template</title>
+</head>
+<body>
+  <script>   
+    var PassSec; //秒数カウント用変数
+
+    /* 繰り返し処理の中身 */
+    function showPassage(){
+      PassSec++;
+      var msg = PassSec + "秒経過";
+      document.getElementById("count").innerHTML = msg;
+    }
+
+    /* 開始ボタン押下 */
+    function startShowing(){
+      PassSec = 0;
+      PassageID = setInterval('showPassage()',1000);  // タイマーをセット（1000ms間隔）
+      const startbtn = document.querySelector("#start");
+      startbtn.disabled = true;
+      // document.getElementById("start").disabled = true;  // 開始ボタンの無効化
+    }
+
+    /* 終了ボタン押下 */
+    function stopShowing(){
+      clearInterval( PassageID );  // タイマーのクリア
+      const startbtn = document.querySelector("#start");
+      startbtn.disabled = false;
+      // document.getElementById("start").disabled = false;  // 開始ボタンの有効化
+    }
+
+    function set2(num){
+      var ret;
+      if (num<10){
+        ret = "0" + num;
+      } else {
+        ret = num;
+      }
+      return ret;
+    }
+
+    function showClock(){
+      var nowTime = new Date();
+      var nowHour = set2( nowTime.getHours() );
+      var nowMin = set2( nowTime.getMinutes() );
+      var nowSec = set2( nowTime.getSeconds() );
+      var msg = nowHour + ":" + nowMin + ":" + nowSec;
+      document.getElementById("clock").innerHTML = msg;
+    }
+    setInterval('showClock()',1000);
+
+  </script>
+
+  <table>
+    <tr>
+      <tb>
+        <div class="clock-area">
+          <p id="clock">（ここに時計が表示されます。）</p>
+        </div>
+      </tb>
+    </tr>
+    <tr>
+      <tb>
+        <div class="btn-area">
+          <button id="start" class="btn btn-shadow btn-color"onclick="startShowing();">start</button>
+          <button id="stop" class="btn btn-shadow btn-color" value="終了" onclick="stopShowing();">stop</button>
+        </div>
+        <p id="count">（ここにカウントが表示される）</p>
+      </tb>
+    </tr>
+  </table>
+</body>
+</html>
